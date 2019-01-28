@@ -21,7 +21,7 @@ This section describes how to install the plugin and get it working.
 4 (Make your instructions match the desired user flow for activating and installing your plugin. Include any steps that might be needed for explanatory purposes)
 
 
-### Versioning
+### Version
 
 #### 1.0.0
 

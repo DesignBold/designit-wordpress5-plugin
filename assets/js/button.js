@@ -7,10 +7,6 @@
  * Copyright (c) DesignBold
  */
 
-// window.DBSDK_test = function(){
-//     DBbutton.addImage('abcccc');
-// }
-
 window.DBSDK_Cfg = {
     export_mode : ['publish', 'download'],
     export_callback: function (resultUrl, document_id, options) {
@@ -536,7 +532,7 @@ window.DBSDK = {
         xhr.send(params);
 
         // Show notification when download image and insert image to editor
-        // DBSDK.$('#dbsdk_modal_notification').style.display = 'block';
+        DBSDK.$('#dbsdk_modal_notification').style.display = 'block';
     }
 
     DBSDK.getParameterByName = function (name, url) {
