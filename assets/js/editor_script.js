@@ -35,7 +35,7 @@ var DBbutton = (function (blocks, editor, components, i18n, element) {
                     className: 'dbdb_st0',
                     points: '7.8,12 7.8,4.9 4.1,0 4.1,7.1   '
                 })
-            ),
+                ),
 
             el('path', {
                 className: 'dbdb_st1',
@@ -51,8 +51,8 @@ var DBbutton = (function (blocks, editor, components, i18n, element) {
                 className: 'dbdb_st3',
                 d: 'M12.9,24.4L12.9,24.4c1.5,0,2.7-0.3,3.8-0.8c1.1-0.5,1.9-1.2,2.6-2.1c0.6-0.8,1.1-1.9,1.4-2.8   c0.3-0.8,0.5-1.8,0.5-2.5h-3.5c-0.1,1.5-0.4,2.2-1,2.9c-0.6,0.7-1.1,1.3-1.8,1.6c-0.7,0.3-1.9,0.5-1.9,0.5v3.4   C13.1,24.5,12.8,24.4,12.9,24.4C12.9,24.4,12.9,24.4,12.9,24.4z',
             }),
-        )
-    );
+            )
+        );
 
     var glprops = {};
     function addImage(url){
@@ -97,9 +97,9 @@ var DBbutton = (function (blocks, editor, components, i18n, element) {
         edit: function (props) {
             glprops = props;
             var attributes = props.attributes,
-                alignment = attributes.alignment,
-                content = attributes.content,
-                _content = [];
+            alignment = attributes.alignment,
+            content = attributes.content,
+            _content = [];
 
             /** Function to add value props */
             function startDesignTool() {
@@ -124,24 +124,43 @@ var DBbutton = (function (blocks, editor, components, i18n, element) {
             }
 
             var generateImage = (url) => {
-                return (
-                    el('figure', {className: 'wp-block-image is-resized'},
-                        el('img', {src: url, resizeMethod: "scale"}),
-                        el(
-                            RichText,
-                            {
-                                key: 'richtext',
-                                tagName: 'p',
-                                style: { textAlign: alignment },
-                                className: props.className,
-                                onChange: onChangeContent,
-                                value: content,
-                                placeholder: __("Write caption..."),
-                                keePlaceholderOnFocus: true,
-                            }
+                return [
+                el(
+                    BlockControls,
+                    { key: 'controls' },
+                    // Button upload images
+                    el(Button, {
+                        type: 'button',
+                        className: 'dbdb-design-button',
+                        onClick: startDesignTool,
+                        children: iconEl
+                    }),
+                    el(
+                        AlignmentToolbar,
+                        {
+                            value: alignment,
+                            onChange: onChangeAlignment,
+                        }
+                        ),
+                    ),
+
+                el('figure', {className: 'wp-block-image is-resized'},
+                    el('img', {src: url, resizeMethod: "scale"}),
+                    el(
+                        RichText,
+                        {
+                            key: 'richtext',
+                            tagName: 'p',
+                            style: { textAlign: alignment },
+                            className: props.className,
+                            onChange: onChangeContent,
+                            value: content,
+                            placeholder: __("Write caption..."),
+                            keePlaceholderOnFocus: true,
+                        }
                         )
                     )
-                )
+                ]
             }
 
             /** End function to add value props */
@@ -155,33 +174,32 @@ var DBbutton = (function (blocks, editor, components, i18n, element) {
                         { key: 'controls' },
                         // Button upload images
                         el(Button, {
-                                type: 'button',
-                                className: 'dbdb-design-button',
-                                onClick: startDesignTool,
-                                children: iconEl
-                            }
-                        ),
+                            type: 'button',
+                            className: 'dbdb-design-button',
+                            onClick: startDesignTool,
+                            children: iconEl
+                        }),
                         // Display alignment toolbar within block controls
                         el(
                             AlignmentToolbar,
                             {
                                 value: alignment,
                                 onChange: onChangeAlignment,
-                            }
+                            }),
                         ),
-                    ),
+
                     el('div', {className: props.className + ' components-placeholder editor-media-placeholder wp-block-image',},
                         el('div', {className: 'components-placeholder__label'},
                             el('svg',
                                 {className: 'dashicon dashicons-format-image', width: '20', height: '20'},
                                 el('path', {d: 'M2.25 1h15.5c.69 0 1.25.56 1.25 1.25v15.5c0 .69-.56 1.25-1.25 1.25H2.25C1.56 19 1 18.44 1 17.75V2.25C1 1.56 1.56 1 2.25 1zM17 17V3H3v14h14zM10 6c0-1.1-.9-2-2-2s-2 .9-2 2 .9 2 2 2 2-.9 2-2zm3 5s0-6 3-6v10c0 .55-.45 1-1 1H5c-.55 0-1-.45-1-1V8c2 0 3 4 3 4s1-3 3-3 3 2 3 2z'})
-                            ),
+                                ),
                             __("DesignBold image")
-                        ),
+                            ),
 
                         el('div', {className: 'components-placeholder__instructions'},
                             __("Drag an image, upload a new one or select a file from your library.")
-                        ),
+                            ),
 
                         el('div', {className: 'components-placeholder__fieldset'},
                             el('div', {className: 'components-drop-zone'}),
@@ -189,15 +207,15 @@ var DBbutton = (function (blocks, editor, components, i18n, element) {
                             el('div',
                                 {className: 'components-form-file-upload'},
                                 el('button',
-                                    {
-                                        type: 'button',
-                                        onClick: startDesignTool,
-                                        className: 'components-button components-icon-button editor-media-placeholder__button is-button is-default is-large',
-                                    },
-                                    iconEl,
-                                    __("DesignBold")
+                                {
+                                    type: 'button',
+                                    onClick: startDesignTool,
+                                    className: 'components-button components-icon-button editor-media-placeholder__button is-button is-default is-large',
+                                },
+                                iconEl,
+                                __("DesignBold")
                                 ),
-                            ),
+                                ),
                             el(MediaUpload, {
                                 onSelect: onSelectImage,
                                 allowedTypes: ALLOWED_MEDIA_TYPES,
@@ -206,19 +224,19 @@ var DBbutton = (function (blocks, editor, components, i18n, element) {
                                 value: attributes.mediaID,
                                 render: function (obj) {
                                     return el(components.Button, {
-                                            className: 'components-button editor-media-placeholder__button is-button is-default is-large',
-                                            onClick: obj.open,
-                                            children: __('Open Media Library')
-                                        }
+                                        className: 'components-button editor-media-placeholder__button is-button is-default is-large',
+                                        onClick: obj.open,
+                                        children: __('Open Media Library')
+                                    }
                                     )
                                 }
                             })
+                            )
                         )
                     )
-                );
             }
 
-            return _content;
+            return [_content];
         },
 
         save: function (props) {
@@ -234,23 +252,23 @@ var DBbutton = (function (blocks, editor, components, i18n, element) {
                             value: props.attributes.content,
                             className: 'designbold-design-button-block-align-' + attributes.alignment,
                         })
+                        )
                     )
-                )
-            );
+                );
         },
     });
 
-    var callbackobject = {
-        addImage : function(url){
-            addImage(url);
-        }
-    };
-    return callbackobject;
+var callbackobject = {
+    addImage : function(url){
+        addImage(url);
+    }
+};
+return callbackobject;
 })(
-    window.wp.blocks,
-    window.wp.editor,
-    window.wp.components,
-    window.wp.i18n,
-    window.wp.element
+window.wp.blocks,
+window.wp.editor,
+window.wp.components,
+window.wp.i18n,
+window.wp.element
 );
 
